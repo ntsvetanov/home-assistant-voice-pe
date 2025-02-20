@@ -308,22 +308,22 @@ void NabuMicrophone::read_task_(void *params) {
               size_t bytes_to_write = frames_read * sizeof(int16_t);
 
               if (this_microphone->channel_0_ != nullptr) {
-                std::string log_output;
-                for (size_t i = 0; i < frames_read; i++) {
-                    log_output += std::to_string(channel_0_samples[i]) + " ";
-                }
-                ESP_LOGD(TAG, "Channel 0 Samples: %s", log_output.c_str());
+                // std::string log_output;
+                // for (size_t i = 0; i < frames_read; i++) {
+                //     log_output += std::to_string(channel_0_samples[i]) + " ";
+                // }
+                // ESP_LOGD(TAG, "Channel 0 Samples: %s", log_output.c_str());
             
                 this_microphone->channel_0_->get_ring_buffer()->write((void *) channel_0_samples.data(),
                                                                       bytes_to_write);
               }
               
               if (this_microphone->channel_1_ != nullptr) {
-                  std::string log_output;
-                  for (size_t i = 0; i < frames_read; i++) {
-                      log_output += std::to_string(channel_1_samples[i]) + " ";
-                  }
-                  ESP_LOGD(TAG, "Channel 1 Samples: %s", log_output.c_str());
+                  // std::string log_output;
+                  // for (size_t i = 0; i < frames_read; i++) {
+                  //     log_output += std::to_string(channel_1_samples[i]) + " ";
+                  // }
+                  // ESP_LOGD(TAG, "Channel 1 Samples: %s", log_output.c_str());
               
                   this_microphone->channel_1_->get_ring_buffer()->write((void *) channel_1_samples.data(),
                                                                         bytes_to_write);

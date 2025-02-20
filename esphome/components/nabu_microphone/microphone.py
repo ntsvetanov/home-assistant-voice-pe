@@ -149,4 +149,4 @@ async def to_code(config):
     cg.add(var.set_i2s_mode(config[CONF_I2S_MODE]))
 
     cg.add_define("USE_OTA_STATE_CALLBACK")
-    print("end of to_code nabu @microphone")
+    
