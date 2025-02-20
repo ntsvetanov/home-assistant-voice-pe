@@ -110,6 +110,7 @@ CONFIG_SCHEMA = cv.All(
 
 
 async def to_code(config):
+    print("to_code nabu @microphone")
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
 
@@ -132,11 +133,13 @@ async def to_code(config):
         cg.add(channel_1.set_amplify_shift(channel_1_config[CONF_AMPLIFY_SHIFT]))
 
     if config[CONF_ADC_TYPE] == "internal":
+        print("internal")
         variant = esp32.get_esp32_variant()
         pin_num = config[CONF_ADC_PIN][CONF_NUMBER]
         channel = ESP32_VARIANT_ADC1_PIN_TO_CHANNEL[variant][pin_num]
         cg.add(var.set_adc_channel(channel))
     else:
+        print("else external")
         cg.add(var.set_din_pin(config[CONF_I2S_DIN_PIN]))
         cg.add(var.set_pdm(config[CONF_PDM]))
 
@@ -146,3 +149,4 @@ async def to_code(config):
     cg.add(var.set_i2s_mode(config[CONF_I2S_MODE]))
 
     cg.add_define("USE_OTA_STATE_CALLBACK")
+    print("end of to_code nabu @microphone")

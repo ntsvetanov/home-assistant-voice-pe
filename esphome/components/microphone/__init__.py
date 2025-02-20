@@ -108,5 +108,6 @@ automation.register_condition(
 
 @coroutine_with_priority(100.0)
 async def to_code(config):
+    print("to code from @microphone")
     cg.add_global(microphone_ns.using)
     cg.add_define("USE_MICROPHONE")
