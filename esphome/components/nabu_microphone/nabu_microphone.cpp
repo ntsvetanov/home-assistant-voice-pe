@@ -308,13 +308,13 @@ void NabuMicrophone::read_task_(void *params) {
               size_t bytes_to_write = frames_read * sizeof(int16_t);
 
               if (this_microphone->channel_0_ != nullptr) {
-                ESP_LOGD(TAG,  channel_0_samples.data());
+                ESP_LOGD(TAG, "%p", (const void*)channel_0_samples.data());
 
                 this_microphone->channel_0_->get_ring_buffer()->write((void *) channel_0_samples.data(),
                                                                       bytes_to_write);
               }
               if (this_microphone->channel_1_ != nullptr) {
-                ESP_LOGD(TAG,  channel_1_samples.data());
+                ESP_LOGD(TAG, "%p", (const void*)channel_1_samples.data());
 
                 this_microphone->channel_1_->get_ring_buffer()->write((void *) channel_1_samples.data(),
                                                                       bytes_to_write);
