@@ -193,6 +193,7 @@ void NabuMicrophone::read_task_(void *params) {
   esp_err_t err;
 
   while (true) {
+    ESP_LOGD(TAG,  "@START");
     uint32_t notification_bits = 0;
     xTaskNotifyWait(ULONG_MAX,           // clear all bits at start of wait
                     ULONG_MAX,           // clear all bits after waiting
