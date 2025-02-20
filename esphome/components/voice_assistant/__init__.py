@@ -165,6 +165,7 @@ CONFIG_SCHEMA = cv.All(
 
 
 async def to_code(config):
+    print("to_code voice_assistant @livinghomes")
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
 
@@ -366,6 +367,7 @@ VOICE_ASSISTANT_ACTION_SCHEMA = cv.Schema({cv.GenerateID(): cv.use_id(VoiceAssis
     ),
 )
 async def voice_assistant_listen_to_code(config, action_id, template_arg, args):
+    print("voice_assistant_listen_to_code @livinghomes")
     var = cg.new_Pvariable(action_id, template_arg)
     await cg.register_parented(var, config[CONF_ID])
     if CONF_SILENCE_DETECTION in config:
@@ -378,6 +380,7 @@ async def voice_assistant_listen_to_code(config, action_id, template_arg, args):
 
 @register_action("voice_assistant.stop", StopAction, VOICE_ASSISTANT_ACTION_SCHEMA)
 async def voice_assistant_stop_to_code(config, action_id, template_arg, args):
+    print("voice_assistant_stop_to_code @livinghomes")
     var = cg.new_Pvariable(action_id, template_arg)
     await cg.register_parented(var, config[CONF_ID])
     return var
@@ -387,6 +390,7 @@ async def voice_assistant_stop_to_code(config, action_id, template_arg, args):
     "voice_assistant.is_running", IsRunningCondition, VOICE_ASSISTANT_ACTION_SCHEMA
 )
 async def voice_assistant_is_running_to_code(config, condition_id, template_arg, args):
+    print("voice_assistant_is_running_to_code @livinghomes")
     var = cg.new_Pvariable(condition_id, template_arg)
     await cg.register_parented(var, config[CONF_ID])
     return var
@@ -396,6 +400,7 @@ async def voice_assistant_is_running_to_code(config, condition_id, template_arg,
     "voice_assistant.connected", ConnectedCondition, VOICE_ASSISTANT_ACTION_SCHEMA
 )
 async def voice_assistant_connected_to_code(config, condition_id, template_arg, args):
+    print("voice_assistant_connected_to_code @livinghomes")
     var = cg.new_Pvariable(condition_id, template_arg)
     await cg.register_parented(var, config[CONF_ID])
     return var
