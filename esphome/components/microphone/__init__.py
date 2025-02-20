@@ -49,6 +49,7 @@ IsCapturingCondition = microphone_ns.class_(
 
 async def setup_microphone_core_(var, config):
     for conf in config.get(CONF_ON_DATA, []):
+        print("setup_microphone_core_ ", conf)
         trigger = cg.new_Pvariable(conf[CONF_TRIGGER_ID], var)
         await automation.build_automation(
             trigger,
@@ -58,6 +59,7 @@ async def setup_microphone_core_(var, config):
 
 
 async def register_microphone(var, config):
+    print("register_microphone")
     if not CORE.has_id(config[CONF_ID]):
         var = cg.Pvariable(config[CONF_ID], var)
     await setup_microphone_core_(var, config)
