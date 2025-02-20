@@ -35,8 +35,14 @@ from esphome.const import (
     TYPE_LOCAL,
 )
 
+print("----------------------------------")
+print("start the messaging here")
+print("hello from @microwake")
+print("----------------------------------")
 
 _LOGGER = logging.getLogger(__name__)
+
+_LOGGER.info("Hello from @microwake")
 
 CODEOWNERS = ["@kahrendt", "@jesserockz"]
 DEPENDENCIES = ["microphone"]

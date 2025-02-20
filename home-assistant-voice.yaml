@@ -19,7 +19,7 @@ substitutions:
 
 esphome:
   name: home-assistant-voice
-  friendly_name: Home Assistant Voice
+  friendly_name: Home Assistant Voice by living homes
   name_add_mac_suffix: true
   min_version: 2025.2.0
   on_boot:
@@ -73,7 +73,14 @@ wifi:
     - script.execute: control_leds
   on_disconnect:
     - script.execute: control_leds
-
+  networks:
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password
+  manual_ip:
+    static_ip: 192.168.14.200
+    gateway: 192.168.12.1
+    subnet: 255.255.248.0
+    
 logger:
   level: DEBUG
   logs:
@@ -1013,10 +1020,10 @@ script:
   - id: control_leds_improv_ble_state
     then:
       - light.turn_on:
-          brightness: 66%
-          red: 100%
-          green: 89%
-          blue: 71%
+          brightness: 90%
+          red: 10%
+          green: 100%
+          blue: 10%
           id: voice_assistant_leds
           effect: "Twinkle"
 
@@ -1515,7 +1522,7 @@ voice_kit:
 external_components:
   - source:
       type: git
-      url: https://github.com/esphome/home-assistant-voice-pe
+      url: https://github.com/ntsvetanov/home-assistant-voice-pe
       ref: dev
     components:
       - micro_wake_word
@@ -1590,7 +1597,7 @@ voice_assistant:
     - lambda: id(init_in_progress) = false;
     - micro_wake_word.start:
     - lambda: id(voice_assistant_phase) = ${voice_assist_idle_phase_id};
-    - script.execute: control_leds
+    - script.execute: control_leds_improv_ble_state
   on_client_disconnected:
     - voice_assistant.stop:
     - lambda: id(voice_assistant_phase) = ${voice_assist_not_ready_phase_id};

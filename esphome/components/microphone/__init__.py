@@ -8,6 +8,11 @@ from esphome.core import CORE
 from esphome.coroutine import coroutine_with_priority
 
 
+print("----------------------------------")
+print("start the messaging here")
+print("hello from @livinghomes")
+print("----------------------------------")
+
 CODEOWNERS = ["@jesserockz"]
 
 IS_PLATFORM_COMPONENT = True
