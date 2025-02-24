@@ -22,9 +22,11 @@ esphome:
   friendly_name: Home Assistant Voice by living homes
   name_add_mac_suffix: true
   min_version: 2025.2.0
-  libraries:
-    -  /mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
-
+  # libraries:
+  #   -  /mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
+  platformio_options:
+    lib_deps:
+      -  file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
   on_boot:
     priority: 375
     then:
