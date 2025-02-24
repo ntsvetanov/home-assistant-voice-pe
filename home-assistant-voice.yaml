@@ -23,9 +23,9 @@ esphome:
   name_add_mac_suffix: true
   min_version: 2025.2.0
 
-  platformio_options:
-      lib_deps:
-        - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
+  # platformio_options:
+  #     lib_deps:
+  #       - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
         
   on_boot:
     priority: 375
