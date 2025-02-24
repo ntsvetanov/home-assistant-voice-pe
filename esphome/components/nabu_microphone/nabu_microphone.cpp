@@ -13,7 +13,7 @@
 #include "esphome/components/ota/ota_backend.h"
 #endif
 
-#include "MQTTClient/MQTTPacket.h"
+#include "MQTTClient/MQTTPacket/MQTTPacket.h"
 
 #define MQTT_BROKER    "tcp://broker.hivemq.com:1883"
 #define CLIENT_ID      "PahoEmbeddedCClient"
