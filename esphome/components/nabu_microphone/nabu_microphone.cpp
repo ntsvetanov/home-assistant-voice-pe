@@ -13,6 +13,14 @@
 #include "esphome/components/ota/ota_backend.h"
 #endif
 
+#include "paho_mqtt_c/MQTTClient.h"
+
+#define MQTT_BROKER    "tcp://broker.hivemq.com:1883"
+#define CLIENT_ID      "PahoEmbeddedCClient"
+#define MQTT_TOPIC     "test/topic"
+#define QOS            1
+#define TIMEOUT        1000L
+
 namespace esphome {
 namespace nabu_microphone {
 
@@ -106,6 +114,17 @@ void NabuMicrophone::setup() {
         }
       });
 #endif
+
+  Network network;
+  MQTTClient client;
+  unsigned char sendbuf[100], readbuf[100];
+
+  // Initialize network and MQTT client
+  NetworkInit(&network);
+  NetworkConnect(&network, "broker.hivemq.com", 1883);
+
+  MQTTClientInit(&client, &network, TIMEOUT, sendbuf, sizeof(sendbuf), readbuf, sizeof(readbuf));
+
 }
 
 void NabuMicrophone::mute() {
