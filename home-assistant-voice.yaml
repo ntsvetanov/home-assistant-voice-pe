@@ -25,7 +25,7 @@ esphome:
 
   platformio_options:
       lib_deps:
-        - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.embedded-c.git#master
+        - https://github.com/eclipse-paho/paho.mqtt.embedded-c.git#master
         
   on_boot:
     priority: 375
