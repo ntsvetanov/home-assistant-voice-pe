@@ -22,9 +22,11 @@ esphome:
   friendly_name: Home Assistant Voice by living homes
   name_add_mac_suffix: true
   min_version: 2025.2.0
+
   platformio_options:
-    lib_deps:
-      - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.embedded-c.git
+      lib_deps:
+        - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
+        
   on_boot:
     priority: 375
     then:
