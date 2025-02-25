@@ -27,7 +27,6 @@ esphome:
       - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_mqtt_c
       #- paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
-      # - paho_embedded_c=https://github.com/eclipse-paho/paho.mqtt.embedded-c.git#master
       #- eclipse/Paho@^1.0.0
 
 
