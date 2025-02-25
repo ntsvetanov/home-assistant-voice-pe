@@ -25,12 +25,12 @@ esphome:
   platformio_options:
     lib_deps:
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/Paho
-      - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
+      # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_mqtt_c
       #- paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
       # - eclipse/Paho@^1.0.0
-      # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_packet_c
-      # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_client_c
+      - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_packet_c
+      - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_client_c
       
   on_boot:
     priority: 375
