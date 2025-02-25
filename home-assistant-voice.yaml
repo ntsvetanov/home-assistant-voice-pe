@@ -26,8 +26,11 @@ esphome:
     lib_deps:
       - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_mqtt_c
-  #     # - paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
-      # - eclipse/Paho@^1.0.0
+      #- paho_mqtt_c=https://github.com/eclipse-paho/paho.mqtt.c.git#master
+      # - paho_embedded_c=https://github.com/eclipse-paho/paho.mqtt.embedded-c.git#master
+      #- eclipse/Paho@^1.0.0
+
+
 
   on_boot:
     priority: 375
@@ -89,7 +92,7 @@ wifi:
     subnet: 255.255.248.0
     
 logger:
-  level: DEBUG
+  level: VERBOSE
   logs:
     sensor: WARN  # avoids logging debug sensor updates
 

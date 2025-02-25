@@ -8,7 +8,10 @@
 #include "esphome/components/i2s_audio/i2s_audio.h"
 #include "esphome/components/microphone/microphone.h"
 #include "esphome/core/component.h"
+
 #include "esphome/core/ring_buffer.h"
+#include "MQTTClient.h"
+
 
 namespace esphome {
 namespace nabu_microphone {

@@ -20,7 +20,7 @@ from esphome.components.i2s_audio import (
 )
 
 CODEOWNERS = ["@kahrendt"]
-DEPENDENCIES = ["i2s_audio"]
+DEPENDENCIES = ["i2s_audio", "paho_embedded_c"]
 
 CONF_ADC_PIN = "adc_pin"
 CONF_ADC_TYPE = "adc_type"
