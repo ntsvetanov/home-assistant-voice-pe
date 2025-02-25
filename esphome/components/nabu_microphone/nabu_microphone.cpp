@@ -19,7 +19,7 @@
 #define QOS            1
 #define TIMEOUT        1000L
 
-#include "MQTTClient-C/MQTTClient.h"
+#include "MQTTClient-C/src/MQTTClient.h"
 
 namespace esphome {
 namespace nabu_microphone {
