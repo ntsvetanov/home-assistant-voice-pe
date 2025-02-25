@@ -113,7 +113,7 @@ async def to_code(config):
     print("to_code nabu @microphone")
     var = cg.new_Pvariable(config[CONF_ID])
 
-    cg.add_library("eclipse/Pah", "^1.0.0")
+    cg.add_library("eclipse/Paho", "^1.0.0")
     await cg.register_component(var, config)
 
     await cg.register_parented(var, config[CONF_I2S_AUDIO_ID])
