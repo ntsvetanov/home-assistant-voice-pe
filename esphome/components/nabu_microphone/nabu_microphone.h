@@ -10,7 +10,6 @@
 #include "esphome/core/component.h"
 
 #include "esphome/core/ring_buffer.h"
-#include "MQTTClient.h"
 
 
 namespace esphome {

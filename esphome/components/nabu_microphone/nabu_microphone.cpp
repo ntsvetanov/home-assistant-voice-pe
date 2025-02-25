@@ -19,6 +19,8 @@
 #define QOS            1
 #define TIMEOUT        1000L
 
+#include "MQTTClient.h"
+
 namespace esphome {
 namespace nabu_microphone {
 
@@ -114,7 +116,7 @@ void NabuMicrophone::setup() {
 #endif
 
   // Network network;
-  // MQTTClient client;
+  MQTTClient client;
   // unsigned char sendbuf[100], readbuf[100];
 
   // // Initialize network and MQTT client
