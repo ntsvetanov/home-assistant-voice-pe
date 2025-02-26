@@ -48,7 +48,6 @@
 //   };
   
 
-
 namespace esphome {
 namespace nabu_microphone {
 
@@ -143,6 +142,15 @@ void NabuMicrophone::setup() {
       });
 #endif
 
+  // Network network;
+  // MQTTClient client;
+  // unsigned char sendbuf[100], readbuf[100];
+
+  // // Initialize network and MQTT client
+  // NetworkInit(&network);
+  // NetworkConnect(&network, "broker.hivemq.com", 1883);
+
+  // MQTTClientInit(&client, &network, TIMEOUT, sendbuf, sizeof(sendbuf), readbuf, sizeof(readbuf));
 
 }
 
@@ -229,7 +237,7 @@ void NabuMicrophone::read_task_(void *params) {
   NabuMicrophone *this_microphone = (NabuMicrophone *) params;
   TaskEvent event;
   esp_err_t err;
-  MqttSetup();
+
   while (true) {
     ESP_LOGD(TAG,  "@START");
     uint32_t notification_bits = 0;
