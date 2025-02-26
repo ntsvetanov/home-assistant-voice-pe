@@ -114,16 +114,15 @@ void NabuMicrophone::setup() {
         }
       });
 #endif
+  int rc;
+  MqttNet net;
+  MqttClient client;
 
-  // Network network;
-  // MQTTClient client;
-  // unsigned char sendbuf[100], readbuf[100];
+  /* Start example MQTT Client */
+  ESP_LOGE(TAG, "MQTT Client\n");
 
-  // // Initialize network and MQTT client
-  // NetworkInit(&network);
-  // NetworkConnect(&network, "broker.hivemq.com", 1883);
-
-  // MQTTClientInit(&client, &network, TIMEOUT, sendbuf, sizeof(sendbuf), readbuf, sizeof(readbuf));
+  /* Initialize Network */
+  rc = MqttClientNet_Init(&net);
 
 }
 

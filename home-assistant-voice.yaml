@@ -32,6 +32,8 @@ esphome:
       # - mqtt_packet_c=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_packet_c
       # - mqtt_client_c=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_client_c
       - wolf_mqtt=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/wolf_mqtt
+    build_flags:
+      - -I/mnt/c/voice_assistant/home-assistant-voice-pe/lib/wolf_mqtt/wolfmqtt
   on_boot:
     priority: 375
     then:
