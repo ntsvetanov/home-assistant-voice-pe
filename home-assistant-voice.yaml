@@ -1531,9 +1531,8 @@ voice_kit:
 
 external_components:
   - source:
-      type: git
-      url: file:///mnt/c/voice_assistant/home-assistant-voice-pe/
-      ref: dev
+      type: local
+      path: /mnt/c/voice_assistant/home-assistant-voice-pe/esphome/components
     components:
       - micro_wake_word
       - microphone
