@@ -11,10 +11,6 @@
 
 #include "esphome/core/ring_buffer.h"
 
-extern "C" {
-  #include "mqtt_client.h"
-}
-
 namespace esphome {
 namespace nabu_microphone {
 
@@ -97,8 +93,6 @@ class NabuMicrophone : public i2s_audio::I2SAudioIn, public Component {
   i2s_channel_fmt_t channel_;
   i2s_mode_t i2s_mode_{};
   uint32_t sample_rate_;
-  MqttClient client;
-
 };
 
 class NabuMicrophoneChannel : public microphone::Microphone, public Component {
@@ -150,3 +144,56 @@ class NabuMicrophoneChannel : public microphone::Microphone, public Component {
 }  // namespace esphome
 
 #endif  // USE_ESP32
+
+
+#include <iostream>
+#include <cstring>  // for memset
+extern "C" {
+#include "mqtt_client.h"
+}
+
+class MqttWrapper {
+private:
+    MqttClient client;
+    MqttNet network;
+    static constexpr int BUF_SIZE = 1024;
+    byte tx_buf[BUF_SIZE];
+    byte rx_buf[BUF_SIZE];
+
+public:
+    MqttWrapper() {
+        memset(&client, 0, sizeof(client));
+        memset(&network, 0, sizeof(network));
+    }
+
+    bool initialize() {
+        int ret = MqttClient_Init(&client, &network, nullptr, tx_buf, BUF_SIZE, rx_buf, BUF_SIZE, 5000);
+        if (ret != MQTT_CODE_SUCCESS) {
+            std::cerr << "Failed to initialize MQTT client: " << MqttClient_ReturnCodeToString(ret) << std::endl;
+            return false;
+        }
+        return true;
+    }
+
+    bool connectToBroker(const char* host, int port, bool useTls = false) {
+        int ret = MqttClient_NetConnect(&client, host, port, 5000, useTls, nullptr);
+        if (ret != MQTT_CODE_SUCCESS) {
+            std::cerr << "Failed to connect to broker: " << MqttClient_ReturnCodeToString(ret) << std::endl;
+            return false;
+        }
+        return true;
+    }
+
+    bool disconnectFromBroker() {
+        int ret = MqttClient_Disconnect(&client);
+        if (ret != MQTT_CODE_SUCCESS) {
+            std::cerr << "Failed to disconnect: " << MqttClient_ReturnCodeToString(ret) << std::endl;
+            return false;
+        }
+        return true;
+    }
+
+    ~MqttWrapper() {
+        MqttClient_DeInit(&client);
+    }
+};
