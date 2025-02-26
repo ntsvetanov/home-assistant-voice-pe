@@ -21,22 +21,18 @@
 
 #include "mqtt_client.h"
 
+int MqttSetup() {
+  int rc;
+  MqttNet net;
+  MqttClient client;
 
-#ifdef __cplusplus
-    extern "C" {
-#endif
+  ESP_LOGE(TAG, "MQTT Client\n");
 
-int rc;
-MqttNet net;
-MqttClient client;
+  rc = MqttClientNet_Init(&net);
+  
+  return rc;
+}
 
-ESP_LOGE(TAG, "MQTT Client\n");
-
-rc = MqttClientNet_Init(&net);
-
-#ifdef __cplusplus
-    } /* extern "C" */
-#endif
 
 
 namespace esphome {
@@ -219,7 +215,7 @@ void NabuMicrophone::read_task_(void *params) {
   NabuMicrophone *this_microphone = (NabuMicrophone *) params;
   TaskEvent event;
   esp_err_t err;
-
+  MqttSetup();
   while (true) {
     ESP_LOGD(TAG,  "@START");
     uint32_t notification_bits = 0;
