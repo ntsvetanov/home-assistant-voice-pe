@@ -108,6 +108,8 @@ void NabuMicrophone::setup() {
         }
       });
 #endif
+
+  MqttClient client;
 }
 
 void NabuMicrophone::mute() {
