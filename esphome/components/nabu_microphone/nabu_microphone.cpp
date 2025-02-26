@@ -109,7 +109,7 @@ void NabuMicrophone::setup() {
       });
 #endif
 
-  MqttClient client;
+  MqttClient* client;
 }
 
 void NabuMicrophone::mute() {
