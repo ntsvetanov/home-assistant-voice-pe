@@ -12,7 +12,7 @@
 #include "esphome/core/ring_buffer.h"
 
 extern "C" {
-  #include "mqtt_client.h"
+  #include "wolf_mqtt/mqtt_client.h"
 }
 
 namespace esphome {
