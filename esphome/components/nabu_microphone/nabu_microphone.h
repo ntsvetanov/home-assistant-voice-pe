@@ -11,7 +11,10 @@
 
 #include "esphome/core/ring_buffer.h"
 
-
+extern "C" {
+  #include "mqtt_client.h"
+  #include "mqtt_net.h"
+}
 namespace esphome {
 namespace nabu_microphone {
 
@@ -94,6 +97,8 @@ class NabuMicrophone : public i2s_audio::I2SAudioIn, public Component {
   i2s_channel_fmt_t channel_;
   i2s_mode_t i2s_mode_{};
   uint32_t sample_rate_;
+  MqttClient client;
+
 };
 
 class NabuMicrophoneChannel : public microphone::Microphone, public Component {
