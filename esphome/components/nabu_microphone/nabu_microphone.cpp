@@ -19,20 +19,26 @@
 #define QOS            1
 #define TIMEOUT        1000L
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "mqtt_client.h"
 
 int MqttSetup() {
-  int rc;
+  
   MqttNet net;
   MqttClient client;
 
   ESP_LOGE(TAG, "MQTT Client\n");
 
-  rc = MqttClientNet_Init(&net);
+  int rc = MqttClientNet_Init(&net);
   
   return rc;
 }
-
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 
 namespace esphome {
