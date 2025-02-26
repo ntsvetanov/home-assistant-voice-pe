@@ -12,8 +12,10 @@
 #ifdef USE_OTA
 #include "esphome/components/ota/ota_backend.h"
 #endif
+extern "C" {
+  #include "mqtt_client.h"
+}
 
-#include "mqtt_client.h"
 
 namespace esphome {
 namespace nabu_microphone {
@@ -109,7 +111,7 @@ void NabuMicrophone::setup() {
       });
 #endif
 
-  MqttClient* client;
+  MqttClient client;
 }
 
 void NabuMicrophone::mute() {
