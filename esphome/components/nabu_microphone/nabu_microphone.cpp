@@ -20,6 +20,22 @@
 #define TIMEOUT        1000L
 
 #include "mqtt_client.h"
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+int rc;
+MqttNet net;
+MqttClient client;
+
+ESP_LOGE(TAG, "MQTT Client\n");
+
+rc = MqttClientNet_Init(&net);
+
+#ifdef __cplusplus
+    } /* extern "C" */
+#endif
+
 
 namespace esphome {
 namespace nabu_microphone {
@@ -114,15 +130,7 @@ void NabuMicrophone::setup() {
         }
       });
 #endif
-  int rc;
-  MqttNet net;
-  MqttClient client;
 
-  /* Start example MQTT Client */
-  ESP_LOGE(TAG, "MQTT Client\n");
-
-  /* Initialize Network */
-  rc = MqttClientNet_Init(&net);
 
 }
 
