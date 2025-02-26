@@ -24,6 +24,7 @@ esphome:
   min_version: 2025.2.0
   platformio_options:
     lib_deps:
+      - wolf_mqtt=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/wolf_mqtt
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/Paho
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_embedded_c
       # - file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/paho_mqtt_c
@@ -31,8 +32,6 @@ esphome:
       # - eclipse/Paho@^1.0.0
       # - mqtt_packet_c=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_packet_c
       # - mqtt_client_c=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/mqtt_client_c
-      - wolf_mqtt=file:///mnt/c/voice_assistant/home-assistant-voice-pe/lib/wolf_mqtt
-
   on_boot:
     priority: 375
     then:

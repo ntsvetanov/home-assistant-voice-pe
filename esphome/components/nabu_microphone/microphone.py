@@ -112,7 +112,7 @@ CONFIG_SCHEMA = cv.All(
 async def to_code(config):
     print("to_code nabu @microphone")
     var = cg.new_Pvariable(config[CONF_ID])
-
+    cg.add_library("wolf_mqtt", "0.0.0+20250226115630")
     await cg.register_component(var, config)
 
     await cg.register_parented(var, config[CONF_I2S_AUDIO_ID])
