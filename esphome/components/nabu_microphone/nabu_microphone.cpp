@@ -20,33 +20,20 @@
 #define TIMEOUT        1000L
 
 #include "mqtt_client.h"
-// class MqttCppClient {
-//   private:
-//       MqttClient client;
-//       MqttNet net;
-//       byte txBuffer[1024]; // Transmission buffer
-//       byte rxBuffer[1024]; // Reception buffer
-  
-//   public:
-//       MqttCppClient() {
-//           MqttClient_Init(&client, &net, nullptr, txBuffer, sizeof(txBuffer),
-//                           rxBuffer, sizeof(rxBuffer), 3000);
-//       }
-  
-//       ~MqttCppClient() {
-//           MqttClient_DeInit(&client);
-//       }
-  
-//       bool connect(const char* host, int port, bool use_tls = false) {
-//           int ret = MqttClient_NetConnect(&client, host, port, 5000, use_tls, nullptr);
-//           return ret == MQTT_CODE_SUCCESS;
-//       }
-  
-//       void disconnect() {
-//           MqttClient_Disconnect(&client);
-//       }
-//   };
-  
+#define MQTT_HOST "test.mosquitto.org"
+#define MQTT_PORT 1883
+#define MQTT_CLIENT_ID "wolfMQTT_Client"
+#define MQTT_TOPIC "wolfMQTT/example"
+#define MQTT_MESSAGE "Hello from wolfMQTT!"
+
+// Callback function for received messages
+int MessageCallback(MqttClient* client, MqttMessage* message, byte msg_new, byte msg_done) {
+    if (msg_new) {
+        std::cout << "Received message on topic: " << message->topic_name << std::endl;
+    }
+    std::cout << "Payload: " << std::string((char*)message->buffer, message->buffer_len) << std::endl;
+    return MQTT_CODE_SUCCESS;
+}
 
 namespace esphome {
 namespace nabu_microphone {
