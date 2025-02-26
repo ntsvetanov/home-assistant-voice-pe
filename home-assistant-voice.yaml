@@ -1532,7 +1532,7 @@ voice_kit:
 external_components:
   - source:
       type: git
-      url: https://github.com/ntsvetanov/home-assistant-voice-pe
+      url: file:///mnt/c/voice_assistant/home-assistant-voice-pe/
       ref: dev
     components:
       - micro_wake_word
