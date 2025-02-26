@@ -13,8 +13,8 @@
 
 extern "C" {
   #include "mqtt_client.h"
-  #include "mqtt_net.h"
 }
+
 namespace esphome {
 namespace nabu_microphone {
 
