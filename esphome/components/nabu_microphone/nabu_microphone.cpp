@@ -20,7 +20,6 @@
 #define TIMEOUT        1000L
 
 #include "mqtt_client.h"
-
 class MqttCppClient {
   private:
       MqttClient client;
