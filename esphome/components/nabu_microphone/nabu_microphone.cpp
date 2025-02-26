@@ -13,7 +13,7 @@
 #include "esphome/components/ota/ota_backend.h"
 #endif
 extern "C" {
-  #include "mqtt_client.h"
+  #include "mqtt_clientw.h"
 }
 
 
