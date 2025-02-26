@@ -13,22 +13,7 @@
 #include "esphome/components/ota/ota_backend.h"
 #endif
 
-#define MQTT_BROKER    "tcp://broker.hivemq.com:1883"
-#define CLIENT_ID      "PahoEmbeddedCClient"
-#define MQTT_TOPIC     "test/topic"
-#define QOS            1
-#define TIMEOUT        1000L
-
 #include "mqtt_client.h"
-#include "mqtt_types.h"
-
-int MessageCallback(MqttClient* client, MqttMessage* message, uint8_t msg_new, uint8_t msg_done) {
-  if (msg_new) {
-      std::cout << "Received message on topic: " << message->topic_name << std::endl;
-  }
-  std::cout << "Payload: " << std::string(reinterpret_cast<char*>(message->buffer), message->buffer_len) << std::endl;
-  return MQTT_CODE_SUCCESS;
-}
 
 namespace esphome {
 namespace nabu_microphone {
@@ -123,17 +108,6 @@ void NabuMicrophone::setup() {
         }
       });
 #endif
-
-  // Network network;
-  // MQTTClient client;
-  // unsigned char sendbuf[100], readbuf[100];
-
-  // // Initialize network and MQTT client
-  // NetworkInit(&network);
-  // NetworkConnect(&network, "broker.hivemq.com", 1883);
-
-  // MQTTClientInit(&client, &network, TIMEOUT, sendbuf, sizeof(sendbuf), readbuf, sizeof(readbuf));
-
 }
 
 void NabuMicrophone::mute() {
