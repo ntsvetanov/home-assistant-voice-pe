@@ -15,6 +15,11 @@ extern "C" {
   #include "mqtt_client.h"
 }
 
+typedef struct MQTTCtx {
+  MqttClient client;
+} MQTTCtx;
+
+
 namespace esphome {
 namespace nabu_microphone {
 
