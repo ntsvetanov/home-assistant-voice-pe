@@ -20,19 +20,14 @@
 #define TIMEOUT        1000L
 
 #include "mqtt_client.h"
-#define MQTT_HOST "test.mosquitto.org"
-#define MQTT_PORT 1883
-#define MQTT_CLIENT_ID "wolfMQTT_Client"
-#define MQTT_TOPIC "wolfMQTT/example"
-#define MQTT_MESSAGE "Hello from wolfMQTT!"
+#include "mqtt_types.h"
 
-// Callback function for received messages
-int MessageCallback(MqttClient* client, MqttMessage* message, byte msg_new, byte msg_done) {
-    if (msg_new) {
-        std::cout << "Received message on topic: " << message->topic_name << std::endl;
-    }
-    std::cout << "Payload: " << std::string((char*)message->buffer, message->buffer_len) << std::endl;
-    return MQTT_CODE_SUCCESS;
+int MessageCallback(MqttClient* client, MqttMessage* message, uint8_t msg_new, uint8_t msg_done) {
+  if (msg_new) {
+      std::cout << "Received message on topic: " << message->topic_name << std::endl;
+  }
+  std::cout << "Payload: " << std::string(reinterpret_cast<char*>(message->buffer), message->buffer_len) << std::endl;
+  return MQTT_CODE_SUCCESS;
 }
 
 namespace esphome {
