@@ -19,26 +19,35 @@
 #define QOS            1
 #define TIMEOUT        1000L
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 #include "mqtt_client.h"
 
-int MqttSetup() {
+class MqttCppClient {
+  private:
+      MqttClient client;
+      MqttNet net;
+      byte txBuffer[1024]; // Transmission buffer
+      byte rxBuffer[1024]; // Reception buffer
   
-  MqttNet net;
-  MqttClient client;
-
-  ESP_LOGE(TAG, "MQTT Client\n");
-
-  int rc = MqttClientNet_Init(&net);
+  public:
+      MqttCppClient() {
+          MqttClient_Init(&client, &net, nullptr, txBuffer, sizeof(txBuffer),
+                          rxBuffer, sizeof(rxBuffer), 3000);
+      }
   
-  return rc;
-}
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
+      ~MqttCppClient() {
+          MqttClient_DeInit(&client);
+      }
+  
+      bool connect(const char* host, int port, bool use_tls = false) {
+          int ret = MqttClient_NetConnect(&client, host, port, 5000, use_tls, nullptr);
+          return ret == MQTT_CODE_SUCCESS;
+      }
+  
+      void disconnect() {
+          MqttClient_Disconnect(&client);
+      }
+  };
+  
 
 
 namespace esphome {
