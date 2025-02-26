@@ -20,32 +20,32 @@
 #define TIMEOUT        1000L
 
 #include "mqtt_client.h"
-class MqttCppClient {
-  private:
-      MqttClient client;
-      MqttNet net;
-      byte txBuffer[1024]; // Transmission buffer
-      byte rxBuffer[1024]; // Reception buffer
+// class MqttCppClient {
+//   private:
+//       MqttClient client;
+//       MqttNet net;
+//       byte txBuffer[1024]; // Transmission buffer
+//       byte rxBuffer[1024]; // Reception buffer
   
-  public:
-      MqttCppClient() {
-          MqttClient_Init(&client, &net, nullptr, txBuffer, sizeof(txBuffer),
-                          rxBuffer, sizeof(rxBuffer), 3000);
-      }
+//   public:
+//       MqttCppClient() {
+//           MqttClient_Init(&client, &net, nullptr, txBuffer, sizeof(txBuffer),
+//                           rxBuffer, sizeof(rxBuffer), 3000);
+//       }
   
-      ~MqttCppClient() {
-          MqttClient_DeInit(&client);
-      }
+//       ~MqttCppClient() {
+//           MqttClient_DeInit(&client);
+//       }
   
-      bool connect(const char* host, int port, bool use_tls = false) {
-          int ret = MqttClient_NetConnect(&client, host, port, 5000, use_tls, nullptr);
-          return ret == MQTT_CODE_SUCCESS;
-      }
+//       bool connect(const char* host, int port, bool use_tls = false) {
+//           int ret = MqttClient_NetConnect(&client, host, port, 5000, use_tls, nullptr);
+//           return ret == MQTT_CODE_SUCCESS;
+//       }
   
-      void disconnect() {
-          MqttClient_Disconnect(&client);
-      }
-  };
+//       void disconnect() {
+//           MqttClient_Disconnect(&client);
+//       }
+//   };
   
 
 
