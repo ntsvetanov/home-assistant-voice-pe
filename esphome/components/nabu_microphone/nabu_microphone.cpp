@@ -13,6 +13,14 @@
 #include "esphome/components/ota/ota_backend.h"
 #endif
 
+
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <cstring>
+
+
+
 namespace esphome {
 namespace nabu_microphone {
 
@@ -39,6 +47,10 @@ static const size_t TASK_DELAY_MS = 10;
 
 static const char *const TAG = "i2s_audio.microphone";
 
+  
+
+
+
 enum TaskNotificationBits : uint32_t {
   COMMAND_START = (1 << 0),  // Starts the main task purpose
   COMMAND_STOP = (1 << 1),   // stops the main task
@@ -55,6 +67,7 @@ void NabuMicrophoneChannel::setup() {
 }
 
 void NabuMicrophoneChannel::loop() {
+
   if (this->parent_->is_running()) {
     if (this->is_muted_) {
       if (this->requested_stop_) {
@@ -72,6 +85,10 @@ void NabuMicrophoneChannel::loop() {
 }
 
 void NabuMicrophone::setup() {
+  ESP_LOGD(TAG, "setup ------ NabuMicrophone Microphone @MQTT" );
+
+
+
   ESP_LOGCONFIG(TAG, "Setting up I2S Audio Microphone...");
 #if SOC_I2S_SUPPORTS_ADC
   if (this->adc_) {
@@ -110,6 +127,8 @@ void NabuMicrophone::setup() {
 }
 
 void NabuMicrophone::mute() {
+  ESP_LOGD(TAG, "MUTE NabuMicrophone Microphone @MQTT");
+
   if (this->channel_0_ != nullptr) {
     this->channel_0_->set_mute_state(true);
   }
@@ -119,6 +138,8 @@ void NabuMicrophone::mute() {
 }
 
 void NabuMicrophone::unmute() {
+  ESP_LOGD(TAG, "UNMUTE NabuMicrophone Microphone @MQTT");
+
   if (this->channel_0_ != nullptr) {
     this->channel_0_->set_mute_state(false);
   }
@@ -194,7 +215,8 @@ void NabuMicrophone::read_task_(void *params) {
   esp_err_t err;
 
   while (true) {
-    ESP_LOGD(TAG,  "@START");
+    ESP_LOGD(TAG,  "@START NabuMicrophone read_task_");
+
     uint32_t notification_bits = 0;
     xTaskNotifyWait(ULONG_MAX,           // clear all bits at start of wait
                     ULONG_MAX,           // clear all bits after waiting
@@ -209,6 +231,7 @@ void NabuMicrophone::read_task_(void *params) {
         event.type = TaskEventType::WARNING;
         event.err = ESP_ERR_INVALID_STATE;
         xQueueSend(this_microphone->event_queue_, &event, portMAX_DELAY);
+
         continue;
       }
 
@@ -216,6 +239,8 @@ void NabuMicrophone::read_task_(void *params) {
         event.type = TaskEventType::WARNING;
         event.err = ESP_ERR_INVALID_STATE;
         xQueueSend(this_microphone->event_queue_, &event, portMAX_DELAY);
+
+
         continue;
       }
 
@@ -297,6 +322,9 @@ void NabuMicrophone::read_task_(void *params) {
                 if ((this_microphone->channel_0_ != nullptr) && (!this_microphone->channel_0_->get_mute_state())) {
                   channel_0_sample = buffer[NUMBER_OF_CHANNELS * i] >> channel_0_shift;
                   channel_0_samples[i] = (int16_t) clamp<int32_t>(channel_0_sample, INT16_MIN, INT16_MAX);
+
+
+
                 }
 
                 int32_t channel_1_sample = 0;
@@ -314,7 +342,8 @@ void NabuMicrophone::read_task_(void *params) {
                 //     log_output += std::to_string(channel_0_samples[i]) + " ";
                 // }
                 // ESP_LOGD(TAG, "Channel 0 Samples: %s", log_output.c_str());
-            
+                std::string data(reinterpret_cast<char*>(channel_0_samples.data()), bytes_to_write);
+                this_microphone->send_mqtt_msg(data, "lh/platform/integrations/discovery/dev/chanel0");
                 this_microphone->channel_0_->get_ring_buffer()->write((void *) channel_0_samples.data(),
                                                                       bytes_to_write);
               }
@@ -325,7 +354,9 @@ void NabuMicrophone::read_task_(void *params) {
                   //     log_output += std::to_string(channel_1_samples[i]) + " ";
                   // }
                   // ESP_LOGD(TAG, "Channel 1 Samples: %s", log_output.c_str());
-              
+
+                  std::string data(reinterpret_cast<char*>(channel_1_samples.data()), bytes_to_write);
+                  this_microphone->send_mqtt_msg(data, "lh/platform/integrations/discovery/dev/chanel1");
                   this_microphone->channel_1_->get_ring_buffer()->write((void *) channel_1_samples.data(),
                                                                         bytes_to_write);
               }
@@ -358,7 +389,9 @@ void NabuMicrophone::read_task_(void *params) {
 }
 
 void NabuMicrophone::start() {
-  
+
+  ESP_LOGD(TAG, "Starting NabuMicrophone Microphone @MQTT");
+
   if (this->is_failed())
     return;
   if ((this->state_ == microphone::STATE_STARTING) || (this->state_ == microphone::STATE_RUNNING))
@@ -373,6 +406,7 @@ void NabuMicrophone::start() {
 }
 
 void NabuMicrophone::stop() {
+  ESP_LOGD(TAG, "Stop NabuMicrophone Microphone @MQTT");
   if (this->state_ == microphone::STATE_STOPPED || this->is_failed())
     return;
 
@@ -386,12 +420,18 @@ void NabuMicrophone::loop() {
     this->stop();
   }
 
+  
+  
+  
+  
+
   // Note this->state_ is only modified here based on the status of the task
   TaskEvent event;
   while (xQueueReceive(this->event_queue_, &event, 0)) {
     switch (event.type) {
       case TaskEventType::STARTING:
         this->state_ = microphone::STATE_STARTING;
+        this->initMqtt();
         ESP_LOGD(TAG, "Starting I2S Audio Microphne");
         break;
       case TaskEventType::STARTED:
@@ -400,6 +440,7 @@ void NabuMicrophone::loop() {
         break;
       case TaskEventType::RUNNING:
         this->state_ = microphone::STATE_RUNNING;
+        
         this->status_clear_warning();
         break;
       case TaskEventType::MUTED:
@@ -428,3 +469,5 @@ void NabuMicrophone::loop() {
 }  // namespace esphome
 
 #endif  // USE_ESP32
+
+

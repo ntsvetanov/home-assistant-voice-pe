@@ -11,13 +11,8 @@
 
 #include "esphome/core/ring_buffer.h"
 
-extern "C" {
-  #include "mqtt_client.h"
-}
 
-typedef struct MQTTCtx {
-  MqttClient client;
-} MQTTCtx;
+#include "nabu_mqtt_client.h"
 
 
 namespace esphome {
@@ -57,6 +52,31 @@ class NabuMicrophone : public i2s_audio::I2SAudioIn, public Component {
 
   NabuMicrophoneChannel *get_channel_0() { return this->channel_0_; }
   NabuMicrophoneChannel *get_channel_1() { return this->channel_1_; }
+  MqttClientWrapper mqttClient;
+
+  void initMqtt() {
+  
+    std::string broker = "192.168.13.122";  // Change if using a different broker
+    std::string clientId = "ExampleClient";
+    std::string username = "lhomes";  // Set your MQTT username
+    std::string password = "lhomes2023";  // Set your MQTT password
+    int port = 1883;  // Default MQTT port
+    bool useTLS = false; // Set to true if using MQTT over TLS
+    int qos = 0;
+    std::string message = "Hello from MQTT 123 ";
+    std::string topic = "lh/platform/integrations/discovery/dev/esp32";
+
+    if (!this->mqttClient.initialize()) return;
+    if (!this->mqttClient.setupClient()) return;
+    if (!this->mqttClient.connectToBroker(broker, port, useTLS)) return;
+    if (!this->mqttClient.establishConnection(clientId, username, password)) return;
+    
+}
+  void send_mqtt_msg(const std::string &msg, const std::string &topic) {
+    int qos = 0;
+    this->mqttClient.publishMessage(topic, msg, qos);
+  }
+
 
 #if SOC_I2S_SUPPORTS_ADC
   void set_adc_channel(adc1_channel_t channel) {
